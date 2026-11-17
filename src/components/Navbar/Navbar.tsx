@@ -20,15 +20,10 @@ function Navbar() {
         </Link>
 
         <div className={`nav-links ${menuOpen ? "active" : ""}`}>
-          <a href="#home" onClick={() => setMenuOpen(false)}>
-            Home
-          </a>
-          <a href="#agencies" onClick={() => setMenuOpen(false)}>
-            Agencies
-          </a>
-          <a href="#universities" onClick={() => setMenuOpen(false)}>
-            Universities
-          </a>
+          <Link to="/">Home</Link>
+          <Link to="/agencies">Agencies</Link>
+          <Link to="/universities">Universities</Link>
+
           <a href="#programs" onClick={() => setMenuOpen(false)}>
             Programs
           </a>

@@ -1,0 +1,5 @@
+@import "../Universities/Universities.css";
+
+.agency-hero {
+  background: linear-gradient(135deg, #fff0f7, #f0edff);
+}
