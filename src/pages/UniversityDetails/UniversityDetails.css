@@ -1,0 +1,299 @@
+.university-details-page {
+  background: #faf9ff;
+  min-height: 100vh;
+  padding: 35px 0 80px;
+}
+
+.university-profile {
+  background: white;
+  padding: 30px;
+  border-radius: 25px;
+  border: 1px solid #eeeaf8;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.university-profile-image {
+  height: 390px;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.university-profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.university-profile-badges {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  display: flex;
+  gap: 8px;
+}
+
+.university-profile-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.university-profile-content h1 {
+  font-size: clamp(27px, 4vw, 39px);
+  line-height: 1.25;
+  margin: 13px 0;
+}
+
+.university-description {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #77778d;
+}
+
+.university-detail-info {
+  display: grid;
+  gap: 16px;
+  margin: 25px 0;
+}
+
+.university-detail-info div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: #66667d;
+}
+
+.university-detail-info svg {
+  color: #6955e8;
+}
+
+.tuition-information {
+  background: #f4f1ff;
+  padding: 18px;
+  border-radius: 14px;
+  display: grid;
+  gap: 8px;
+}
+
+.tuition-information span {
+  font-size: 12px;
+  color: #77778d;
+}
+
+.tuition-information strong {
+  color: #6955e8;
+  font-size: 17px;
+}
+
+.tuition-information small {
+  color: #88889b;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+/* PROGRAMS */
+
+.university-program-section {
+  padding-top: 75px;
+}
+
+.university-program-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.university-program-card {
+  border-radius: 22px;
+  padding: 30px;
+}
+
+.d2-program {
+  background: linear-gradient(135deg, #eeeaff, #f8f5ff);
+}
+
+.d4-program {
+  background: linear-gradient(135deg, #ffeaf3, #fff5f8);
+}
+
+.detail-program-icon {
+  width: 55px;
+  height: 55px;
+  border-radius: 16px;
+  background: white;
+  display: grid;
+  place-items: center;
+  color: #6955e8;
+  margin-bottom: 20px;
+}
+
+.d4-program .detail-program-icon {
+  color: #ec65a5;
+}
+
+.university-program-card>span {
+  font-size: 11px;
+  font-weight: 800;
+  color: #6955e8;
+}
+
+.d4-program>span {
+  color: #ec65a5;
+}
+
+.university-program-card h3 {
+  font-size: 23px;
+  margin: 10px 0;
+}
+
+.university-program-card>p {
+  color: #77778d;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.university-program-card ul {
+  list-style: none;
+  display: grid;
+  gap: 12px;
+  margin-top: 23px;
+}
+
+.university-program-card li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #66667d;
+  font-size: 12px;
+}
+
+.university-program-card li svg {
+  color: #6955e8;
+}
+
+.d4-program li svg {
+  color: #ec65a5;
+}
+
+.program-disclaimer {
+  color: #88889b;
+  font-size: 11px;
+  line-height: 1.7;
+  margin-top: 20px;
+}
+
+/* RELATED AGENCIES */
+
+.related-agencies {
+  padding-top: 75px;
+}
+
+.partner-count {
+  background: #f0edff;
+  color: #6955e8;
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.details-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.details-heading h2 {
+  font-size: clamp(23px, 4vw, 32px);
+  margin: 12px 0;
+}
+
+.details-heading p {
+  color: #88889b;
+  font-size: 13px;
+}
+
+.details-empty {
+  text-align: center;
+  background: white;
+  padding: 50px 20px;
+  border-radius: 20px;
+  color: #888;
+}
+
+.details-empty svg {
+  color: #6955e8;
+  margin: 0 auto 15px;
+}
+
+.details-empty h3 {
+  color: var(--dark);
+  margin-bottom: 10px;
+}
+
+.details-empty p {
+  font-size: 13px;
+}
+
+/* OFFICIAL INFO */
+
+.official-info-banner {
+  margin-top: 65px;
+  background: linear-gradient(120deg, #ede9ff, #ffeaf3);
+  padding: 32px;
+  border-radius: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+}
+
+.official-info-banner h2 {
+  font-size: 21px;
+  margin-bottom: 10px;
+}
+
+.official-info-banner p {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #77778d;
+  max-width: 650px;
+}
+
+.official-info-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #6955e8;
+  font-size: 12px;
+  font-weight: 600;
+  max-width: 220px;
+}
+
+@media (max-width: 768px) {
+  .university-profile {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  .university-profile-image {
+    height: 270px;
+  }
+
+  .university-program-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .details-heading,
+  .official-info-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
