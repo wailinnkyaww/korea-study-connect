@@ -20,7 +20,6 @@ import "./Home.css";
 
 function Home() {
   const [universitySearch, setUniversitySearch] = useState("");
-  const [agencySearch, setAgencySearch] = useState("");
   const [program, setProgram] = useState("All");
   const [search, setSearch] = useState("");
 
@@ -237,7 +236,6 @@ function Home() {
                   onChange={(e) => setSearch(e.target.value)}
                 />
               </div>
-              
             </div>
 
             <div className="university-grid">

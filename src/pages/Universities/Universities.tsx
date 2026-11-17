@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Search, MapPin, SlidersHorizontal } from "lucide-react";
+import { Search, SlidersHorizontal } from "lucide-react";
 import Navbar from "../../components/Navbar/Navbar";
 import UniversityCard from "../../components/UniversityCard/UniversityCard";
 import { universities } from "../../data/sampleData";
