@@ -1,0 +1,467 @@
+.student-saved-universities {
+  display: flex;
+  flex-direction: column;
+  gap: 23px;
+}
+
+.saved-universities-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.saved-universities-heading h2 {
+  margin: 0;
+  color: #172033;
+  font-size: 26px;
+}
+
+.saved-universities-heading p {
+  margin: 7px 0 0;
+  color: #7b8495;
+  font-size: 14px;
+}
+
+.saved-count {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  color: #e34b68;
+  background: #fff0f3;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.saved-universities-summary {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  padding: 22px;
+  background: linear-gradient(110deg, #eef2ff, #f8f7ff);
+  border: 1px solid #e3e8ff;
+  border-radius: 13px;
+}
+
+.saved-summary-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  color: #4263eb;
+  background: #fff;
+  border-radius: 13px;
+}
+
+.saved-universities-summary span {
+  color: #687386;
+  font-size: 12px;
+}
+
+.saved-universities-summary h3 {
+  margin: 4px 0;
+  color: #172033;
+  font-size: 21px;
+}
+
+.saved-universities-summary p {
+  margin: 0;
+  color: #7b8495;
+  font-size: 12px;
+}
+
+.saved-universities-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 16px;
+  background: #fff;
+  border: 1px solid #e9edf3;
+  border-radius: 12px;
+}
+
+.saved-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: min(100%, 520px);
+  padding: 11px 13px;
+  color: #8993a4;
+  background: #f8fafc;
+  border: 1px solid #e8edf3;
+  border-radius: 9px;
+}
+
+.saved-search input {
+  width: 100%;
+  color: #263247;
+  font: inherit;
+  font-size: 13px;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.saved-search input::placeholder {
+  color: #a0a8b5;
+}
+
+.saved-degree-filter {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 12px;
+  color: #687386;
+  border: 1px solid #e1e7ef;
+  border-radius: 9px;
+}
+
+.saved-degree-filter select {
+  min-width: 120px;
+  color: #263247;
+  font: inherit;
+  font-size: 13px;
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.saved-universities-list-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.saved-universities-list-heading h3 {
+  margin: 0;
+  color: #172033;
+  font-size: 17px;
+}
+
+.saved-universities-list-heading p {
+  margin: 6px 0 0;
+  color: #8993a4;
+  font-size: 12px;
+}
+
+.browse-universities-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #4263eb;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.browse-universities-link:hover {
+  color: #2948c7;
+}
+
+.saved-universities-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.saved-university-card {
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #e9edf3;
+  border-radius: 13px;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.saved-university-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgb(15 23 42 / 7%);
+}
+
+.saved-university-image {
+  position: relative;
+  height: 175px;
+  overflow: hidden;
+  background: #edf1f7;
+}
+
+.saved-university-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.saved-university-card:hover .saved-university-image img {
+  transform: scale(1.04);
+}
+
+.saved-image-label {
+  position: absolute;
+  bottom: 12px;
+  left: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  color: #fff;
+  background: rgb(15 23 42 / 70%);
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.remove-saved-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 37px;
+  height: 37px;
+  color: #e34b68;
+  background: #fff;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 12%);
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease;
+}
+
+.remove-saved-button:hover {
+  color: #fff;
+  background: #e34b68;
+}
+
+.saved-university-content {
+  padding: 18px;
+}
+
+.saved-university-content h3 {
+  margin: 0 0 9px;
+  color: #172033;
+  font-size: 17px;
+}
+
+.saved-university-location {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #8993a4;
+  font-size: 12px;
+}
+
+.saved-university-location svg {
+  color: #4263eb;
+}
+
+.saved-university-description {
+  min-height: 42px;
+  margin: 13px 0;
+  color: #748095;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.saved-degree-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.saved-degree-tags span {
+  padding: 5px 9px;
+  color: #4263eb;
+  background: #edf1ff;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.saved-university-tuition {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 16px;
+  padding: 12px 0;
+  border-top: 1px solid #edf0f4;
+}
+
+.saved-university-tuition span {
+  color: #8993a4;
+  font-size: 11px;
+}
+
+.saved-university-tuition strong {
+  color: #263247;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.saved-university-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.saved-view-details {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px 13px;
+  color: #fff;
+  background: #4263eb;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.saved-view-details:hover {
+  color: #fff;
+  background: #2948c7;
+}
+
+.saved-remove-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 5px;
+  color: #d64b5e;
+  background: transparent;
+  border: none;
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.saved-remove-text:hover {
+  color: #a9273a;
+}
+
+.saved-universities-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 55px 20px;
+  background: #fff;
+  border: 1px solid #e9edf3;
+  border-radius: 13px;
+  text-align: center;
+}
+
+.saved-empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 65px;
+  height: 65px;
+  color: #4263eb;
+  background: #edf1ff;
+  border-radius: 50%;
+}
+
+.saved-universities-empty h3 {
+  margin: 16px 0 7px;
+  color: #172033;
+  font-size: 17px;
+}
+
+.saved-universities-empty p {
+  max-width: 380px;
+  margin: 0;
+  color: #8993a4;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.saved-empty-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 18px;
+  padding: 10px 16px;
+  color: #fff;
+  background: #4263eb;
+  border: none;
+  border-radius: 7px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.saved-empty-action:hover {
+  color: #fff;
+  background: #2948c7;
+}
+
+@media (max-width: 1100px) {
+  .saved-universities-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 650px) {
+  .student-saved-universities {
+    gap: 17px;
+  }
+
+  .saved-universities-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .saved-universities-heading h2 {
+    font-size: 22px;
+  }
+
+  .saved-universities-summary {
+    align-items: flex-start;
+    padding: 16px;
+  }
+
+  .saved-universities-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+    padding: 13px;
+  }
+
+  .saved-search {
+    width: auto;
+  }
+
+  .saved-degree-filter select {
+    flex: 1;
+  }
+
+  .saved-universities-list-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .saved-university-image {
+    height: 155px;
+  }
+
+  .saved-university-content {
+    padding: 15px;
+  }
+}

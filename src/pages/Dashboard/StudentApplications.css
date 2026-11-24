@@ -1,0 +1,502 @@
+.student-applications {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.applications-page-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dashboard-eyebrow {
+  display: inline-block;
+  margin-bottom: 7px;
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+
+.applications-page-heading h2 {
+  margin: 0;
+  color: #172033;
+  font-size: 26px;
+}
+
+.applications-page-heading p {
+  margin: 7px 0 0;
+  color: #7b8495;
+  font-size: 14px;
+}
+
+.application-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.application-summary-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #e9edf3;
+  border-radius: 13px;
+}
+
+.summary-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  flex-shrink: 0;
+  border-radius: 12px;
+}
+
+.summary-total {
+  color: #4263eb;
+  background: #edf1ff;
+}
+
+.summary-pending {
+  color: #d97706;
+  background: #fff5e5;
+}
+
+.summary-review {
+  color: #7c3aed;
+  background: #f3edff;
+}
+
+.summary-accepted {
+  color: #059669;
+  background: #e8f8f1;
+}
+
+.application-summary-card span {
+  display: block;
+  margin-bottom: 5px;
+  color: #7b8495;
+  font-size: 12px;
+}
+
+.application-summary-card h3 {
+  margin: 0;
+  color: #172033;
+  font-size: 24px;
+}
+
+.applications-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 17px;
+  background: #fff;
+  border: 1px solid #e9edf3;
+  border-radius: 13px;
+}
+
+.applications-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: min(100%, 520px);
+  padding: 11px 13px;
+  color: #8993a4;
+  background: #f8fafc;
+  border: 1px solid #e8edf3;
+  border-radius: 9px;
+}
+
+.applications-search input {
+  width: 100%;
+  color: #263247;
+  font: inherit;
+  font-size: 13px;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.applications-search input::placeholder {
+  color: #a0a8b5;
+}
+
+.applications-filter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #687386;
+  font-size: 13px;
+}
+
+.applications-filter select {
+  min-width: 145px;
+  padding: 10px 12px;
+  color: #263247;
+  font: inherit;
+  background: #fff;
+  border: 1px solid #e1e7ef;
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+}
+
+.applications-list-panel {
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #e9edf3;
+  border-radius: 13px;
+}
+
+.applications-list-heading {
+  padding: 20px 22px;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.applications-list-heading h3 {
+  margin: 0;
+  color: #172033;
+  font-size: 16px;
+}
+
+.applications-list-heading p {
+  margin: 6px 0 0;
+  color: #8993a4;
+  font-size: 12px;
+}
+
+.applications-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.applications-table {
+  width: 100%;
+  min-width: 850px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.applications-table th {
+  padding: 14px 18px;
+  color: #7b8495;
+  font-size: 11px;
+  font-weight: 600;
+  background: #fafbfd;
+  white-space: nowrap;
+}
+
+.applications-table td {
+  padding: 16px 18px;
+  color: #647084;
+  font-size: 12px;
+  border-top: 1px solid #f0f2f5;
+  white-space: nowrap;
+}
+
+.application-university-cell {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 220px;
+}
+
+.application-university-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 39px;
+  height: 39px;
+  flex-shrink: 0;
+  color: #4263eb;
+  background: #edf1ff;
+  border-radius: 10px;
+}
+
+.application-university-cell strong {
+  display: block;
+  margin-bottom: 5px;
+  color: #263247;
+  font-size: 12px;
+}
+
+.application-university-cell span {
+  color: #8993a4;
+  font-size: 11px;
+}
+
+.application-id {
+  color: #647084;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.application-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status-accepted {
+  color: #07845c;
+  background: #e7f8f0;
+}
+
+.status-pending {
+  color: #b76b08;
+  background: #fff4df;
+}
+
+.status-review {
+  color: #7042c4;
+  background: #f1eaff;
+}
+
+.status-rejected {
+  color: #c33d4b;
+  background: #ffebed;
+}
+
+.application-view-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  color: #4263eb;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  background: #f0f3ff;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.application-view-button:hover {
+  background: #e2e8ff;
+}
+
+.applications-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 55px 20px;
+  color: #8993a4;
+  text-align: center;
+}
+
+.applications-empty h3 {
+  margin: 14px 0 5px;
+  color: #263247;
+  font-size: 16px;
+}
+
+.applications-empty p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.applications-empty button {
+  margin-top: 17px;
+  padding: 9px 15px;
+  color: #fff;
+  background: #4263eb;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+/* Application details modal */
+.application-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgb(15 23 42 / 50%);
+}
+
+.application-details-modal {
+  width: 100%;
+  max-width: 520px;
+  overflow: hidden;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 20px 60px rgb(0 0 0 / 18%);
+}
+
+.application-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 22px;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.application-modal-header span {
+  color: #4263eb;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.application-modal-header h3 {
+  margin: 8px 0 0;
+  color: #172033;
+  font-size: 19px;
+}
+
+.application-modal-header button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  color: #647084;
+  background: #f3f5f8;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.application-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 22px;
+}
+
+.application-modal-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.application-modal-status>span:first-child {
+  color: #7b8495;
+  font-size: 13px;
+}
+
+.application-detail-item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  color: #4263eb;
+}
+
+.application-detail-item div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.application-detail-item span {
+  color: #8993a4;
+  font-size: 11px;
+}
+
+.application-detail-item strong {
+  color: #263247;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.application-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px 22px;
+  background: #fafbfd;
+  border-top: 1px solid #edf0f4;
+}
+
+.application-modal-footer button {
+  padding: 9px 20px;
+  color: #fff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  background: #4263eb;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+@media (max-width: 1000px) {
+  .application-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .student-applications {
+    gap: 17px;
+  }
+
+  .applications-page-heading h2 {
+    font-size: 22px;
+  }
+
+  .application-summary {
+    gap: 10px;
+  }
+
+  .application-summary-card {
+    gap: 10px;
+    padding: 13px;
+  }
+
+  .summary-icon {
+    width: 37px;
+    height: 37px;
+  }
+
+  .application-summary-card span {
+    font-size: 10px;
+  }
+
+  .application-summary-card h3 {
+    font-size: 20px;
+  }
+
+  .applications-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+    padding: 13px;
+  }
+
+  .applications-search {
+    width: auto;
+  }
+
+  .applications-filter {
+    justify-content: space-between;
+  }
+
+  .applications-filter select {
+    flex: 1;
+  }
+
+  .applications-list-heading {
+    padding: 16px;
+  }
+
+  .application-details-modal {
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+}

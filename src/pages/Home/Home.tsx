@@ -22,6 +22,7 @@ function Home() {
   const [universitySearch, setUniversitySearch] = useState("");
   const [program, setProgram] = useState("All");
   const [search, setSearch] = useState("");
+  const [agencySearch, setAgencySearch] = useState("");
 
   const filteredUniversities = useMemo(() => {
     return universities.filter((university) => {
