@@ -4,6 +4,11 @@ import Home from "./pages/Home/Home";
 import AgencyDetails from "./pages/AgencyDetails/AgencyDetails";
 import UniversityDetails from "./pages/UniversityDetails/UniversityDetails";
 import Agencies from "./pages/Agencies/Agencies";
+import AgencyUniversities from "./pages/Dashboard/AgencyUniversities";
+import AgencyStudents from "./pages/Dashboard/AgencyStudents";
+import AgencyApplications from "./pages/Dashboard/AgencyApplications";
+import AgencyProfile from "./pages/Dashboard/AgencyProfile";
+import AgencySettings from "./pages/Dashboard/AgencySettings";
 import Universities from "./pages/Universities/Universities";
 import StudentApplications from "./pages/Dashboard/StudentApplications";
 import StudentSavedUniversities from "./pages/Dashboard/StudentSavedUniversities";
@@ -56,6 +61,11 @@ function App() {
         {/* Agency dashboard */}
         <Route path="/agency" element={<DashboardLayout role="agency" />}>
           <Route path="dashboard" element={<AgencyDashboard />} />
+          <Route path="universities" element={<AgencyUniversities />} />
+          <Route path="students" element={<AgencyStudents />} />
+          <Route path="applications" element={<AgencyApplications />} />
+          <Route path="profile" element={<AgencyProfile />} />
+          <Route path="settings" element={<AgencySettings />} />
         </Route>
 
         {/* 404 */}

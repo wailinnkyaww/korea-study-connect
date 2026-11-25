@@ -1,0 +1,517 @@
+.agency-universities-page {
+  width: 100%;
+  color: #1e293b;
+}
+
+.agency-universities-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.agency-page-eyebrow {
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+}
+
+.agency-universities-heading h2 {
+  margin: 7px 0;
+  font-size: 27px;
+  font-weight: 700;
+}
+
+.agency-universities-heading p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.agency-add-university-btn,
+.agency-university-empty button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 17px;
+  border: none;
+  border-radius: 9px;
+  background: #4f46e5;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.agency-add-university-btn:hover,
+.agency-university-empty button:hover {
+  background: #4338ca;
+}
+
+.agency-university-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.agency-university-stat-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 21px;
+  background: #fff;
+  border: 1px solid #e8edf4;
+  border-radius: 13px;
+  box-shadow: 0 3px 12px rgba(15, 23, 42, 0.03);
+}
+
+.agency-stat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 12px;
+}
+
+.agency-stat-icon.purple {
+  background: #eeedff;
+  color: #6257d9;
+}
+
+.agency-stat-icon.green {
+  background: #e6f8ef;
+  color: #15965b;
+}
+
+.agency-stat-icon.orange {
+  background: #fff3e5;
+  color: #e58b28;
+}
+
+.agency-university-stat-card span {
+  display: block;
+  margin-bottom: 6px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.agency-university-stat-card h3 {
+  margin: 0;
+  color: #1e293b;
+  font-size: 25px;
+}
+
+.agency-university-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 26px;
+  padding: 15px;
+  background: #fff;
+  border: 1px solid #e8edf4;
+  border-radius: 12px;
+}
+
+.agency-university-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  padding: 0 12px;
+  color: #94a3b8;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+.agency-university-search input {
+  width: 100%;
+  height: 42px;
+  border: none;
+  outline: none;
+  color: #1e293b;
+  font-size: 14px;
+  background: transparent;
+}
+
+.agency-university-toolbar select {
+  min-width: 145px;
+  height: 44px;
+  padding: 0 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  outline: none;
+  color: #334155;
+  background: #fff;
+  font-size: 14px;
+}
+
+.agency-university-list-header {
+  margin-bottom: 16px;
+}
+
+.agency-university-list-header h3 {
+  margin: 0 0 5px;
+  font-size: 18px;
+}
+
+.agency-university-list-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.agency-university-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.agency-university-card {
+  min-width: 0;
+  padding: 21px;
+  background: #fff;
+  border: 1px solid #e8edf4;
+  border-radius: 13px;
+  box-shadow: 0 3px 12px rgba(15, 23, 42, 0.03);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.agency-university-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.07);
+}
+
+.agency-university-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 17px;
+}
+
+.agency-university-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #eeedff;
+  color: #6257d9;
+}
+
+.agency-university-status {
+  padding: 6px 11px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.agency-university-status.active {
+  background: #e7f8ee;
+  color: #16834f;
+}
+
+.agency-university-status.inactive {
+  background: #fff1e8;
+  color: #c56a27;
+}
+
+.agency-university-card>h3 {
+  margin: 0 0 10px;
+  font-size: 17px;
+  line-height: 1.4;
+}
+
+.agency-university-location {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 20px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.agency-university-location svg {
+  flex-shrink: 0;
+}
+
+.agency-university-info {
+  display: grid;
+  gap: 13px;
+  padding: 16px 0;
+  border-top: 1px solid #edf0f5;
+  border-bottom: 1px solid #edf0f5;
+}
+
+.agency-university-info div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.agency-university-info span {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.agency-university-info strong {
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.agency-university-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.agency-university-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 7px 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 7px;
+  background: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.agency-edit-btn {
+  color: #4f46e5;
+}
+
+.agency-edit-btn:hover {
+  background: #f1f0ff;
+}
+
+.agency-toggle-btn {
+  flex: 1;
+  color: #475569;
+}
+
+.agency-toggle-btn:hover {
+  background: #f8fafc;
+}
+
+.agency-delete-btn {
+  width: 36px;
+  color: #dc2626;
+}
+
+.agency-delete-btn:hover {
+  background: #fff1f2;
+}
+
+.agency-university-empty {
+  padding: 65px 20px;
+  text-align: center;
+  background: #fff;
+  border: 1px dashed #cbd5e1;
+  border-radius: 13px;
+}
+
+.agency-university-empty>svg {
+  color: #94a3b8;
+}
+
+.agency-university-empty h3 {
+  margin: 13px 0 7px;
+}
+
+.agency-university-empty p {
+  margin: 0 0 18px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.agency-university-empty button {
+  margin: 0 auto;
+}
+
+.agency-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.55);
+}
+
+.agency-university-modal {
+  width: 100%;
+  max-width: 540px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 25px;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.2);
+}
+
+.agency-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 22px;
+}
+
+.agency-modal-header h3 {
+  margin: 0 0 6px;
+  font-size: 20px;
+}
+
+.agency-modal-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.agency-modal-header>button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  border: none;
+  border-radius: 8px;
+  background: #f1f5f9;
+  color: #475569;
+  cursor: pointer;
+}
+
+.agency-university-modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.agency-university-modal label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.agency-university-modal input {
+  width: 100%;
+  height: 43px;
+  padding: 0 12px;
+  border: 1px solid #dbe2ea;
+  border-radius: 8px;
+  outline: none;
+  color: #1e293b;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.agency-university-modal input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.agency-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 13px;
+}
+
+.agency-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.agency-modal-actions button {
+  min-height: 41px;
+  padding: 0 17px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.agency-cancel-btn {
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  color: #475569;
+}
+
+.agency-save-btn {
+  border: none;
+  background: #4f46e5;
+  color: #fff;
+}
+
+.agency-save-btn:hover {
+  background: #4338ca;
+}
+
+@media (max-width: 900px) {
+  .agency-university-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 650px) {
+  .agency-universities-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .agency-add-university-btn {
+    width: 100%;
+  }
+
+  .agency-university-stats {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .agency-university-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .agency-university-toolbar select {
+    width: 100%;
+  }
+
+  .agency-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .agency-university-modal {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 420px) {
+  .agency-university-actions button {
+    padding: 7px;
+    font-size: 11px;
+  }
+
+  .agency-university-actions button svg {
+    width: 14px;
+  }
+}
