@@ -1,5 +1,7 @@
 import type { ElementType } from "react";
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 import {
   LayoutDashboard,
@@ -95,14 +97,20 @@ const DashboardSidebar = ({
   onClose,
 }: DashboardSidebarProps) => {
   const menuItems = role === "student" ? studentMenu : agencyMenu;
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/", { replace: true });
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
 
   const dashboardTitle =
     role === "student" ? "Student Portal" : "Agency Portal";
-
-  const handleLogout = () => {
-    // Firebase logout will be implemented later.
-    console.log("Logout clicked");
-  };
 
   return (
     <aside className={`dashboard-sidebar ${sidebarOpen ? "sidebar-open" : ""}`}>
@@ -167,8 +175,8 @@ const DashboardSidebar = ({
 
       {/* Sidebar Bottom */}
       <div className="dashboard-sidebar-bottom">
-        <button className="dashboard-logout" onClick={handleLogout}>
-          <LogOut size={19} />
+        <button className="sidebar-logout" onClick={handleLogout}>
+          <LogOut size={18} />
           <span>Logout</span>
         </button>
 

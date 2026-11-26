@@ -1,15 +1,17 @@
 import { useState, type FormEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { Eye, EyeOff, GraduationCap, Lock, Mail } from "lucide-react";
-
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { auth, db } from "../../../config/firebase";
 import "./Login.css";
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
+  const from = (location.state as { from?: { pathname?: string } } | null)?.from
+    ?.pathname;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -46,13 +48,27 @@ const Login = () => {
         throw new Error("Your account has an invalid user role.");
       }
 
-      if (role === "student") {
-        navigate("/student/dashboard", { replace: true });
-      } else if (role === "agency") {
-        navigate("/agency/dashboard", { replace: true });
-      } else {
-        navigate("/admin/dashboard", { replace: true });
-      }
+      const dashboardPath =
+        role === "student"
+          ? "/student/dashboard"
+          : role === "agency"
+            ? "/agency/dashboard"
+            : "/admin/dashboard";
+
+      // Check whether the requested page belongs to this user's role.
+      const canAccessRequestedPage =
+        typeof from === "string" &&
+        ((role === "student" &&
+          (from === "/student" || from.startsWith("/student/"))) ||
+          (role === "agency" &&
+            (from === "/agency" || from.startsWith("/agency/"))) ||
+          (role === "admin" &&
+            (from === "/admin/dashboard" ||
+              from.startsWith("/admin/dashboard/"))));
+
+      navigate(canAccessRequestedPage ? from : dashboardPath, {
+        replace: true,
+      });
     } catch (err: unknown) {
       console.error("Login error:", err);
 

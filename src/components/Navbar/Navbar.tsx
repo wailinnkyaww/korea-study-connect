@@ -1,21 +1,19 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, X, GraduationCap, User, LogOut } from "lucide-react";
-import { signOut } from "firebase/auth";
-
-import { auth } from "../../config/firebase";
 import { useAuth } from "../../context/AuthContext";
 
 import "./Navbar.css";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { currentUser } = useAuth();
+  const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
+  console.log("Current User:", currentUser);
 
   const handleLogout = async () => {
     try {
-      await signOut(auth);
+      await logout();
       setMenuOpen(false);
       navigate("/", { replace: true });
     } catch (error) {

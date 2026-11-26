@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import PublicRoute from "./components/PublicRoute/PublicRoute";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Auth/Login/Login";
 import Register from "./pages/Auth/Register/Register";
@@ -33,59 +34,43 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public routes */}
+        {/* Public pages */}
         <Route path="/" element={<Home />} />
-
         <Route path="/agencies" element={<Agencies />} />
         <Route path="/agencies/:id" element={<AgencyDetails />} />
-
         <Route path="/universities" element={<Universities />} />
         <Route path="/universities/:id" element={<UniversityDetails />} />
-
-        {/* Auth routes */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        {/* Admin routes */}
-        <Route path="/admin/login" element={<AdminLogin />} />
-
-        <Route
-          path="/admin/dashboard"
-          element={
-            <AdminRoute>
-              <Dashboard />
-            </AdminRoute>
-          }
-        />
-
-        {/* Student dashboard */}
-        <Route path="/student" element={<DashboardLayout role="student" />}>
-          <Route path="dashboard" element={<StudentDashboard />} />
-          <Route path="applications" element={<StudentApplications />} />
-          <Route path="saved" element={<StudentSavedUniversities />} />
-          <Route path="profile" element={<StudentProfile />} />
-          <Route path="settings" element={<StudentSettings />} />
+        {/* Authentication pages */}
+        <Route element={<PublicRoute />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
         </Route>
-
-        {/* Agency dashboard */}
-        <Route path="/agency" element={<DashboardLayout role="agency" />}>
-          <Route path="dashboard" element={<AgencyDashboard />} />
-          <Route path="universities" element={<AgencyUniversities />} />
-          <Route path="students" element={<AgencyStudents />} />
-          <Route path="applications" element={<AgencyApplications />} />
-          <Route path="profile" element={<AgencyProfile />} />
-          <Route path="settings" element={<AgencySettings />} />
+        {/* Admin protected page */}
+        <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+          <Route path="/admin/dashboard" element={<Dashboard />} />
         </Route>
-
-        {/* 404 */}
-        <Route
-          path="*"
-          element={
-            <div style={{ textAlign: "center", padding: "100px 20px" }}>
-              <h1>404 - Page Not Found</h1>
-              <a href="/">Return Home</a>
-            </div>
-          }
-        />
+        {/* Student protected pages */}
+        <Route element={<ProtectedRoute allowedRoles={["student"]} />}>
+          <Route path="/student" element={<DashboardLayout role="student" />}>
+            <Route path="dashboard" element={<StudentDashboard />} />
+            <Route path="applications" element={<StudentApplications />} />
+            <Route path="saved" element={<StudentSavedUniversities />} />
+            <Route path="profile" element={<StudentProfile />} />
+            <Route path="settings" element={<StudentSettings />} />
+          </Route>
+        </Route>
+        {/* Agency protected pages */}
+        <Route element={<ProtectedRoute allowedRoles={["agency"]} />}>
+          <Route path="/agency" element={<DashboardLayout role="agency" />}>
+            <Route path="dashboard" element={<AgencyDashboard />} />
+            <Route path="universities" element={<AgencyUniversities />} />
+            <Route path="students" element={<AgencyStudents />} />
+            <Route path="applications" element={<AgencyApplications />} />
+            <Route path="profile" element={<AgencyProfile />} />
+            <Route path="settings" element={<AgencySettings />} />
+          </Route>
+        </Route>
       </Routes>
     </BrowserRouter>
   );

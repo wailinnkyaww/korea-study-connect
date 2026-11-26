@@ -4,20 +4,21 @@ import { Outlet, useLocation } from "react-router-dom";
 import DashboardSidebar from "./DashboardSidebar";
 import DashboardHeader from "./DashboardHeader";
 
+import { useAuth } from "../../context/AuthContext";
+
 import "./DashboardLayout.css";
 
 interface DashboardLayoutProps {
   role: "student" | "agency";
-  userName?: string;
 }
 
-const DashboardLayout = ({
-  role,
-  userName = "Wai Lin Kyaw",
-}: DashboardLayoutProps) => {
+const DashboardLayout = ({ role }: DashboardLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
   const location = useLocation();
+
+  const { currentUser, loading } = useAuth();
+
+  const userName = currentUser?.fullName || "User";
 
   const menuItems =
     role === "student"
@@ -41,9 +42,12 @@ const DashboardLayout = ({
     menuItems.find((item) => item.path === location.pathname)?.name ||
     "Dashboard";
 
+  if (loading) {
+    return <div className="dashboard-loading">Loading dashboard...</div>;
+  }
+
   return (
     <div className="dashboard-layout">
-      {/* Mobile Overlay */}
       {sidebarOpen && (
         <div
           className="dashboard-overlay"
@@ -51,7 +55,6 @@ const DashboardLayout = ({
         />
       )}
 
-      {/* Sidebar */}
       <DashboardSidebar
         role={role}
         userName={userName}
@@ -59,9 +62,7 @@ const DashboardLayout = ({
         onClose={() => setSidebarOpen(false)}
       />
 
-      {/* Main Content */}
       <main className="dashboard-main">
-        {/* Header */}
         <DashboardHeader
           role={role}
           userName={userName}
@@ -69,7 +70,6 @@ const DashboardLayout = ({
           onMenuOpen={() => setSidebarOpen(true)}
         />
 
-        {/* Page Content */}
         <section className="dashboard-content">
           <Outlet />
         </section>
