@@ -1195,3 +1195,118 @@
     font-size: 14px;
   }
 }
+
+/* Dashboard Error */
+.agency-dashboard-error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 20px;
+  padding: 14px 16px;
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 9px;
+  font-size: 13px;
+}
+
+.agency-dashboard-error button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  color: #b91c1c;
+  background: white;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Empty States */
+.agency-data-empty,
+.agency-university-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 240px;
+  padding: 25px;
+  text-align: center;
+}
+
+.agency-empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 55px;
+  height: 55px;
+  margin-bottom: 14px;
+  color: #64748b;
+  background: #f1f5f9;
+  border-radius: 50%;
+}
+
+.agency-data-empty h4,
+.agency-university-empty h4 {
+  margin: 0 0 8px;
+  color: #334155;
+  font-size: 15px;
+}
+
+.agency-data-empty p,
+.agency-university-empty p {
+  max-width: 360px;
+  margin: 0 0 15px;
+  color: #94a3b8;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.agency-data-empty a,
+.agency-university-empty a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.agency-data-empty a:hover,
+.agency-university-empty a:hover {
+  text-decoration: underline;
+}
+
+/* Recent Applications Empty State */
+.agency-table-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 35px 15px;
+  color: #94a3b8;
+  text-align: center;
+}
+
+.agency-table-empty strong {
+  color: #475569;
+  font-size: 13px;
+}
+
+.agency-table-empty span {
+  font-size: 12px;
+}
+
+.agency-university-empty>svg {
+  margin-bottom: 12px;
+  color: #94a3b8;
+}
+
+@media (max-width: 600px) {
+  .agency-dashboard-error {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

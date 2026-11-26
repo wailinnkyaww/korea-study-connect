@@ -1,4 +1,7 @@
 import { Link, useParams } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import ApplicationModal from "../../components/ApplicationModal/ApplicationModal";
 import {
   MapPin,
   GraduationCap,
@@ -18,7 +21,8 @@ import "./UniversityDetails.css";
 
 function UniversityDetails() {
   const { id } = useParams<{ id: string }>();
-
+  const [isApplicationOpen, setIsApplicationOpen] = useState(false);
+  const navigate = useNavigate();
   const university = universities.find((item) => item.id === id);
 
   const relatedAgencies = agencies.filter((agency) =>
@@ -96,7 +100,21 @@ function UniversityDetails() {
                   directly with the university.
                 </small>
               </div>
+              <button
+                className="university-apply-btn"
+                onClick={() => {
+                  setIsApplicationOpen(true);
+                }}
+              >
+                Apply Now
+              </button>
             </div>
+            <ApplicationModal
+              isOpen={isApplicationOpen}
+              onClose={() => setIsApplicationOpen(false)}
+              universityId={university.id}
+              universityName={university.name}
+            />
           </section>
 
           {/* PROGRAM DETAILS */}

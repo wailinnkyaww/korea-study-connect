@@ -1,0 +1,23 @@
+.register-card {
+  max-width: 500px;
+}
+
+.auth-select {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 13px;
+  border: 1px solid #dce2eb;
+  border-radius: 9px;
+  outline: none;
+  background: #ffffff;
+  color: #344054;
+  font-size: 14px;
+}
+
+.auth-select:focus {
+  border-color: #2563eb;
+}
+
+.register-card .auth-form {
+  gap: 16px;
+}

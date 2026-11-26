@@ -1,0 +1,271 @@
+.application-modal-backdrop {
+  position: fixed;
+  z-index: 2000;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.6);
+}
+
+.application-modal-container {
+  width: 100%;
+  max-width: 680px;
+  max-height: 92vh;
+  overflow-y: auto;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.application-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 24px;
+  border-bottom: 1px solid #e8ecf2;
+}
+
+.application-modal-title-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.application-modal-header h2 {
+  margin: 0 0 7px;
+  color: #172033;
+  font-size: 22px;
+}
+
+.application-modal-header p {
+  margin: 0;
+  color: #7b8495;
+  font-size: 13px;
+}
+
+.application-modal-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 8px;
+  background: #f2f4f7;
+  color: #475467;
+  cursor: pointer;
+}
+
+.application-form-body {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  padding: 24px;
+}
+
+.application-form-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.application-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.application-form-group label {
+  color: #344054;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.application-form-group input,
+.application-form-group select,
+.application-form-group textarea {
+  width: 100%;
+  min-height: 43px;
+  padding: 11px 12px;
+  border: 1px solid #dce2eb;
+  border-radius: 8px;
+  outline: none;
+  background: #fff;
+  color: #344054;
+  font-family: inherit;
+  font-size: 13px;
+  box-sizing: border-box;
+}
+
+.application-form-group textarea {
+  resize: vertical;
+}
+
+.application-form-group input:focus,
+.application-form-group select:focus,
+.application-form-group textarea:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.application-form-group input[readonly] {
+  background: #f8fafc;
+  color: #667085;
+}
+
+.application-form-group small {
+  color: #dc2626;
+  font-size: 12px;
+}
+
+.application-form-error {
+  padding: 12px 14px;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  background: #fef2f2;
+  color: #b91c1c;
+  font-size: 13px;
+}
+
+.application-form-notice {
+  padding: 13px;
+  border-radius: 8px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.application-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 18px 24px;
+  border-top: 1px solid #e8ecf2;
+}
+
+.application-modal-footer button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 10px 17px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.application-cancel-btn {
+  border: 1px solid #dce2eb;
+  background: #fff;
+  color: #475467;
+}
+
+.application-submit-btn {
+  border: 1px solid #2563eb;
+  background: #2563eb;
+  color: #fff;
+}
+
+.application-submit-btn:hover {
+  background: #1d4ed8;
+}
+
+.application-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.application-modal-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 250px;
+  color: #667085;
+  font-size: 14px;
+}
+
+.application-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 25px;
+  text-align: center;
+}
+
+.application-success>svg {
+  margin-bottom: 15px;
+  color: #16a34a;
+}
+
+.application-success h3 {
+  margin: 0 0 10px;
+  color: #172033;
+  font-size: 22px;
+}
+
+.application-success p {
+  max-width: 420px;
+  margin: 5px 0;
+  color: #667085;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.application-success button {
+  margin-top: 22px;
+  padding: 11px 30px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.application-loading-icon {
+  animation: application-modal-spin 1s linear infinite;
+}
+
+@keyframes application-modal-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 600px) {
+  .application-modal-backdrop {
+    padding: 10px;
+  }
+
+  .application-modal-header,
+  .application-form-body {
+    padding: 18px;
+  }
+
+  .application-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .application-modal-footer {
+    flex-direction: column-reverse;
+    padding: 15px 18px;
+  }
+
+  .application-modal-footer button {
+    width: 100%;
+  }
+}

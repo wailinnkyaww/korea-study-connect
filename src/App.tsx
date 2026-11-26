@@ -1,15 +1,20 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home/Home";
+import Login from "./pages/Auth/Login/Login";
+import Register from "./pages/Auth/Register/Register";
+
 import AgencyDetails from "./pages/AgencyDetails/AgencyDetails";
-import UniversityDetails from "./pages/UniversityDetails/UniversityDetails";
 import Agencies from "./pages/Agencies/Agencies";
 import AgencyUniversities from "./pages/Dashboard/AgencyUniversities";
 import AgencyStudents from "./pages/Dashboard/AgencyStudents";
 import AgencyApplications from "./pages/Dashboard/AgencyApplications";
 import AgencyProfile from "./pages/Dashboard/AgencyProfile";
 import AgencySettings from "./pages/Dashboard/AgencySettings";
+
 import Universities from "./pages/Universities/Universities";
+import UniversityDetails from "./pages/UniversityDetails/UniversityDetails";
+
 import StudentApplications from "./pages/Dashboard/StudentApplications";
 import StudentSavedUniversities from "./pages/Dashboard/StudentSavedUniversities";
 import StudentProfile from "./pages/Dashboard/StudentProfile";
@@ -37,6 +42,9 @@ function App() {
         <Route path="/universities" element={<Universities />} />
         <Route path="/universities/:id" element={<UniversityDetails />} />
 
+        {/* Auth routes */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         {/* Admin routes */}
         <Route path="/admin/login" element={<AdminLogin />} />
 

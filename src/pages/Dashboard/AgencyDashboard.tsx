@@ -1,3 +1,5 @@
+// export default AgencyDashboard;
+import { useEffect, useState } from "react";
 import {
   Users,
   FileText,
@@ -6,139 +8,85 @@ import {
   GraduationCap,
   ArrowUpRight,
   ArrowRight,
-  Plus,
-  Eye,
-  MapPin,
-  CalendarDays,
-  Building2,
   UserPlus,
+  RefreshCw,
 } from "lucide-react";
 
 import { Link } from "react-router-dom";
+import { getAgencyDashboardStats } from "../../services/agencyDashboardService";
+
 import "./Dashboard.css";
 
-const agencyStats = [
-  {
-    title: "Total Students",
-    value: "156",
-    description: "Students registered",
-    icon: Users,
-    color: "blue",
-  },
-  {
-    title: "Total Applications",
-    value: "248",
-    description: "All submitted applications",
-    icon: FileText,
-    color: "orange",
-  },
-  {
-    title: "Pending Applications",
-    value: "36",
-    description: "Waiting for review",
-    icon: Clock,
-    color: "pink",
-  },
-  {
-    title: "Accepted Applications",
-    value: "128",
-    description: "Successfully accepted",
-    icon: CheckCircle2,
-    color: "green",
-  },
-];
-
-const recentApplications = [
-  {
-    id: 1,
-    student: "Aung Aung",
-    email: "aung@example.com",
-    university: "Seoul National University",
-    program: "Computer Science",
-    date: "Nov 20, 2026",
-    status: "Accepted",
-    initials: "AA",
-    color: "purple",
-  },
-  {
-    id: 2,
-    student: "Su Su",
-    email: "susu@example.com",
-    university: "Korea University",
-    program: "Information Technology",
-    date: "Nov 21, 2026",
-    status: "Pending",
-    initials: "SS",
-    color: "red",
-  },
-  {
-    id: 3,
-    student: "Mg Mg",
-    email: "mgmg@example.com",
-    university: "Yonsei University",
-    program: "Software Engineering",
-    date: "Nov 22, 2026",
-    status: "Under Review",
-    initials: "MM",
-    color: "blue",
-  },
-  {
-    id: 4,
-    student: "Hla Hla",
-    email: "hlahla@example.com",
-    university: "Hanyang University",
-    program: "Computer Science",
-    date: "Nov 23, 2026",
-    status: "Rejected",
-    initials: "HH",
-    color: "orange",
-  },
-];
-
-const universityList = [
-  {
-    id: 1,
-    name: "Seoul National University",
-    location: "Seoul, South Korea",
-    students: 32,
-    initials: "SNU",
-    color: "purple",
-  },
-  {
-    id: 2,
-    name: "Korea University",
-    location: "Seoul, South Korea",
-    students: 24,
-    initials: "KU",
-    color: "red",
-  },
-  {
-    id: 3,
-    name: "Yonsei University",
-    location: "Seoul, South Korea",
-    students: 19,
-    initials: "YU",
-    color: "blue",
-  },
-];
+interface DashboardStats {
+  totalStudents: number;
+}
 
 const AgencyDashboard = () => {
   const agencyName = "Korea Education Agency";
 
-  const getStatusClass = (status: string) => {
-    switch (status) {
-      case "Accepted":
-        return "status-accepted";
-      case "Pending":
-        return "status-pending";
-      case "Under Review":
-        return "status-review";
-      case "Rejected":
-        return "status-rejected";
-      default:
-        return "";
+  const [stats, setStats] = useState<DashboardStats>({
+    totalStudents: 0,
+  });
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  const fetchDashboardData = async () => {
+    try {
+      setIsLoading(true);
+      setError("");
+
+      const data = await getAgencyDashboardStats();
+
+      setStats({
+        totalStudents: data.totalStudents,
+      });
+    } catch (err) {
+      console.error("Dashboard loading error:", err);
+      setError("Unable to load dashboard data. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
+
+  const agencyStats = [
+    {
+      title: "Total Students",
+      value: isLoading
+        ? "..."
+        : error
+          ? "—"
+          : stats.totalStudents.toLocaleString(),
+      description: "Registered student accounts",
+      icon: Users,
+      color: "blue",
+    },
+    {
+      title: "Total Applications",
+      value: "—",
+      description: "Application data not available yet",
+      icon: FileText,
+      color: "orange",
+    },
+    {
+      title: "Pending Applications",
+      value: "—",
+      description: "Application data not available yet",
+      icon: Clock,
+      color: "pink",
+    },
+    {
+      title: "Accepted Applications",
+      value: "—",
+      description: "Application data not available yet",
+      icon: CheckCircle2,
+      color: "green",
+    },
+  ];
 
   return (
     <div className="agency-dashboard">
@@ -158,6 +106,17 @@ const AgencyDashboard = () => {
           Manage Students
         </Link>
       </section>
+
+      {/* Error Message */}
+      {error && (
+        <div className="agency-dashboard-error">
+          <span>{error}</span>
+          <button type="button" onClick={fetchDashboardData}>
+            <RefreshCw size={15} />
+            Retry
+          </button>
+        </div>
+      )}
 
       {/* Statistics */}
       <section className="agency-stats">
@@ -195,39 +154,21 @@ const AgencyDashboard = () => {
             <FileText size={21} />
           </div>
 
-          <div className="agency-chart-content">
-            <div className="agency-chart-circle">
-              <div className="agency-chart-inner">
-                <h2>248</h2>
-                <span>Applications</span>
-              </div>
+          <div className="agency-data-empty">
+            <div className="agency-empty-icon">
+              <FileText size={27} />
             </div>
 
-            <div className="agency-chart-legend">
-              <div>
-                <span className="agency-dot accepted-dot" />
-                <span>Accepted</span>
-                <strong>128</strong>
-              </div>
+            <h4>No Application Data Yet</h4>
 
-              <div>
-                <span className="agency-dot pending-dot" />
-                <span>Pending</span>
-                <strong>36</strong>
-              </div>
+            <p>
+              Application statistics will appear here after the applications
+              collection is created and connected.
+            </p>
 
-              <div>
-                <span className="agency-dot review-dot" />
-                <span>Under Review</span>
-                <strong>52</strong>
-              </div>
-
-              <div>
-                <span className="agency-dot rejected-dot" />
-                <span>Rejected</span>
-                <strong>32</strong>
-              </div>
-            </div>
+            <Link to="/agency/applications">
+              View Applications <ArrowRight size={15} />
+            </Link>
           </div>
         </div>
 
@@ -308,52 +249,18 @@ const AgencyDashboard = () => {
             </thead>
 
             <tbody>
-              {recentApplications.map((application) => (
-                <tr key={application.id}>
-                  <td>
-                    <div className="agency-student-info">
-                      <div
-                        className={`agency-student-avatar ${application.color}`}
-                      >
-                        {application.initials}
-                      </div>
-
-                      <div>
-                        <strong>{application.student}</strong>
-                        <span>{application.email}</span>
-                      </div>
-                    </div>
-                  </td>
-
-                  <td>{application.university}</td>
-                  <td>{application.program}</td>
-
-                  <td>
-                    <span className="agency-date">
-                      <CalendarDays size={14} />
-                      {application.date}
+              <tr>
+                <td colSpan={6}>
+                  <div className="agency-table-empty">
+                    <FileText size={24} />
+                    <strong>No applications found</strong>
+                    <span>
+                      Student application records will appear here when
+                      available.
                     </span>
-                  </td>
-
-                  <td>
-                    <span
-                      className={`application-status ${getStatusClass(application.status)}`}
-                    >
-                      {application.status}
-                    </span>
-                  </td>
-
-                  <td>
-                    <Link
-                      to="/agency/applications"
-                      className="agency-view-btn"
-                      aria-label={`View ${application.student}'s application`}
-                    >
-                      <Eye size={17} />
-                    </Link>
-                  </td>
-                </tr>
-              ))}
+                  </div>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -372,26 +279,16 @@ const AgencyDashboard = () => {
           </Link>
         </div>
 
-        <div className="agency-university-grid">
-          {universityList.map((university) => (
-            <div className="agency-university-card" key={university.id}>
-              <div className={`agency-university-logo ${university.color}`}>
-                {university.initials}
-              </div>
-
-              <h4>{university.name}</h4>
-
-              <span className="agency-university-location">
-                <MapPin size={13} />
-                {university.location}
-              </span>
-
-              <div className="agency-university-footer">
-                <span>Student Applications</span>
-                <strong>{university.students}</strong>
-              </div>
-            </div>
-          ))}
+        <div className="agency-university-empty">
+          <GraduationCap size={30} />
+          <h4>No University Statistics Yet</h4>
+          <p>
+            University information and student selections will appear here after
+            the university data is connected.
+          </p>
+          <Link to="/agency/universities">
+            Manage Universities <ArrowRight size={15} />
+          </Link>
         </div>
       </section>
     </div>

@@ -1,0 +1,100 @@
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
+
+import { onAuthStateChanged, type User } from "firebase/auth";
+
+import { doc, getDoc } from "firebase/firestore";
+
+import { auth, db } from "../config/firebase";
+
+export type UserRole = "student" | "agency" | "admin";
+
+export interface AppUser {
+  uid: string;
+  email: string;
+  fullName: string;
+  role: UserRole;
+}
+
+interface AuthContextType {
+  currentUser: AppUser | null;
+  loading: boolean;
+  firebaseUser: User | null;
+}
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+export const AuthProvider = ({ children }: AuthProviderProps) => {
+  const [currentUser, setCurrentUser] = useState<AppUser | null>(null);
+  const [firebaseUser, setFirebaseUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      setFirebaseUser(user);
+
+      if (!user) {
+        setCurrentUser(null);
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const userRef = doc(db, "users", user.uid);
+        const userSnapshot = await getDoc(userRef);
+
+        if (!userSnapshot.exists()) {
+          setCurrentUser(null);
+          return;
+        }
+
+        const userData = userSnapshot.data();
+        const role = userData.role as UserRole;
+
+        if (!["student", "agency", "admin"].includes(role)) {
+          setCurrentUser(null);
+          return;
+        }
+
+        setCurrentUser({
+          uid: user.uid,
+          email: user.email || userData.email || "",
+          fullName: userData.fullName || "User",
+          role,
+        });
+      } catch (error) {
+        console.error("Error loading user profile:", error);
+        setCurrentUser(null);
+      } finally {
+        setLoading(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  return (
+    <AuthContext.Provider value={{ currentUser, loading, firebaseUser }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+
+  if (!context) {
+    throw new Error("useAuth must be used inside AuthProvider");
+  }
+
+  return context;
+};
