@@ -19,6 +19,7 @@ export interface AppUser {
   email: string;
   fullName: string;
   role: UserRole;
+  profileImage?: string;
 }
 
 interface AuthContextType {
@@ -57,27 +58,38 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       }
 
       try {
+        // Get user document
         const userRef = doc(db, "users", user.uid);
         const userSnapshot = await getDoc(userRef);
 
         if (!userSnapshot.exists()) {
+          console.error("User document does not exist:", user.uid);
           setCurrentUser(null);
           return;
         }
 
         const userData = userSnapshot.data();
-        const role = userData.role as UserRole;
 
-        if (!["student", "agency", "admin"].includes(role)) {
-          setCurrentUser(null);
-          return;
+        // Get profile image
+        let profileImage = userData.profileImage || "";
+
+        // Agency logo is stored in agencies collection
+        if (userData.role === "agency") {
+          const agencyRef = doc(db, "agencies", user.uid);
+          const agencySnapshot = await getDoc(agencyRef);
+
+          if (agencySnapshot.exists()) {
+            profileImage = agencySnapshot.data().logo || "";
+          }
         }
 
+        // Set current user
         setCurrentUser({
           uid: user.uid,
-          email: user.email || userData.email || "",
-          fullName: userData.fullName || "User",
-          role,
+          email: user.email || "",
+          fullName: userData.fullName || "",
+          role: userData.role as UserRole,
+          profileImage,
         });
       } catch (error) {
         console.error("Error loading user profile:", error);

@@ -8,7 +8,6 @@ import {
   EyeOff,
   Globe,
   Mail,
-  Smartphone,
   AlertTriangle,
   Save,
   Trash2,

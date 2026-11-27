@@ -1,5 +1,12 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import type { ChangeEvent, FormEvent } from "react";
+import { useAuth } from "../../context/AuthContext";
+import { uploadProfileImage } from "../../services/cloudinaryService";
+import {
+  getAgencyProfile,
+  updateAgencyProfile,
+} from "../../services/profileService";
+
 import {
   Building2,
   Mail,
@@ -33,31 +40,83 @@ interface AgencyProfileData {
 }
 
 const initialProfile: AgencyProfileData = {
-  agencyName: "Korea Education Agency",
-  email: "info@koreaeducation.com",
-  phone: "+95 9 123456789",
-  website: "https://www.koreaeducation.com",
-  address: "No. 25, Pyay Road",
-  city: "Yangon",
-  country: "Myanmar",
-  registrationNumber: "AG-2026-001",
-  establishedYear: "2020",
-  description:
-    "We help students find suitable universities and educational opportunities in South Korea. Our team provides university guidance and application support.",
-  services:
-    "University Admission, Application Support, Document Preparation, Student Counseling",
-  specialization: "South Korea University Admissions",
+  agencyName: "",
+  email: "",
+  phone: "",
+  website: "",
+  address: "",
+  city: "",
+  country: "",
+  registrationNumber: "",
+  establishedYear: "",
+  description: "",
+  services: "",
+  specialization: "",
 };
 
 const AgencyProfile = () => {
+  const { currentUser } = useAuth();
   const [profile, setProfile] = useState<AgencyProfileData>(initialProfile);
   const [formData, setFormData] = useState<AgencyProfileData>(initialProfile);
   const [savedLogo, setSavedLogo] = useState<string | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [logo, setLogo] = useState<string | null>(null);
   const [savedMessage, setSavedMessage] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [selectedLogoFile, setSelectedLogoFile] = useState<File | null>(null);
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      if (!currentUser?.uid) return;
+
+      try {
+        setIsLoading(true);
+        setErrorMessage("");
+
+        const data = await getAgencyProfile(currentUser.uid);
+
+        const loadedProfile: AgencyProfileData = data
+          ? {
+              agencyName: data.agencyName,
+              email: data.email,
+              phone: data.phone,
+              website: data.website,
+              address: data.address,
+              city: data.city,
+              country: data.country,
+              registrationNumber: data.registrationNumber,
+              establishedYear: data.establishedYear,
+              description: data.description,
+              services: data.services,
+              specialization: data.specialization,
+            }
+          : {
+              ...initialProfile,
+              agencyName: currentUser.fullName || "",
+              email: currentUser.email || "",
+            };
+
+        setProfile(loadedProfile);
+        setFormData(loadedProfile);
+        setSavedLogo(data?.logo || null);
+        setLogo(data?.logo || null);
+      } catch (error) {
+        console.error("Failed to load agency profile:", error);
+        setErrorMessage(
+          error instanceof Error
+            ? error.message
+            : "Unable to load agency profile.",
+        );
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadProfile();
+  }, [currentUser?.uid, currentUser?.fullName, currentUser?.email]);
 
   const handleInputChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -75,23 +134,28 @@ const AgencyProfile = () => {
 
     if (!file) return;
 
-    if (!file.type.startsWith("image/")) {
-      alert("Please select an image file.");
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+
+    if (!allowedTypes.includes(file.type)) {
+      setErrorMessage("Only JPG, PNG, and WebP images are allowed.");
       event.target.value = "";
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      alert("Image size must be less than 5MB.");
+      setErrorMessage("Image size must be less than 5 MB.");
       event.target.value = "";
       return;
     }
+
+    setSelectedLogoFile(file);
 
     const reader = new FileReader();
 
     reader.onloadend = () => {
       if (typeof reader.result === "string") {
         setLogo(reader.result);
+        setErrorMessage("");
       }
     };
 
@@ -100,35 +164,91 @@ const AgencyProfile = () => {
 
   const handleEdit = () => {
     setFormData(profile);
+    setLogo(savedLogo);
+    setSelectedLogoFile(null);
     setIsEditing(true);
     setSavedMessage(false);
+    setErrorMessage("");
   };
 
   const handleCancel = () => {
     setFormData(profile);
     setLogo(savedLogo);
+    setSelectedLogoFile(null);
     setIsEditing(false);
     setSavedMessage(false);
+    setErrorMessage("");
 
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    setProfile(formData);
-    setIsEditing(false);
-    setSavedMessage(true);
-    setSavedLogo(logo);
+    if (!currentUser?.uid) {
+      setErrorMessage("Please log in again.");
+      return;
+    }
 
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
+    try {
+      setIsSaving(true);
+      setErrorMessage("");
+      setSavedMessage(false);
+
+      let uploadedLogoUrl = savedLogo || "";
+
+      if (selectedLogoFile) {
+        uploadedLogoUrl = await uploadProfileImage(
+          selectedLogoFile,
+          "agencies",
+        );
+      }
+
+      await updateAgencyProfile(currentUser.uid, {
+        agencyName: formData.agencyName.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim(),
+        website: formData.website.trim(),
+        address: formData.address.trim(),
+        city: formData.city.trim(),
+        country: formData.country.trim(),
+        registrationNumber: formData.registrationNumber.trim(),
+        establishedYear: formData.establishedYear.trim(),
+        description: formData.description.trim(),
+        services: formData.services.trim(),
+        specialization: formData.specialization.trim(),
+        logo: uploadedLogoUrl,
+      });
+
+      setProfile(formData);
+      setSavedLogo(uploadedLogoUrl || null);
+      setLogo(uploadedLogoUrl || null);
+      setSelectedLogoFile(null);
+      setIsEditing(false);
+      setSavedMessage(true);
+
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    } catch (error) {
+      console.error("Failed to save agency profile:", error);
+
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : "Failed to save agency profile. Please try again.",
+      );
+    } finally {
+      setIsSaving(false);
     }
   };
 
   const displayLogo = logo;
+  if (isLoading) {
+    return <div className="dashboard-loading">Loading agency profile...</div>;
+  }
 
   return (
     <div className="agency-profile-page">
@@ -146,12 +266,15 @@ const AgencyProfile = () => {
             Edit Profile
           </button>
         )}
+        {errorMessage && (
+          <div className="agency-profile-error">{errorMessage}</div>
+        )}
       </div>
 
       {savedMessage && (
         <div className="agency-profile-success">
           <CheckCircle2 size={19} />
-          Profile changes saved in this session.
+          Profile changes saved successfully to your account.
           <button
             onClick={() => setSavedMessage(false)}
             aria-label="Dismiss message"
@@ -438,9 +561,13 @@ const AgencyProfile = () => {
               Cancel
             </button>
 
-            <button type="submit" className="agency-profile-save-btn">
+            <button
+              type="submit"
+              className="agency-profile-save-btn"
+              disabled={isSaving}
+            >
               <Save size={17} />
-              Save Changes
+              {isSaving ? "Saving..." : "Save Changes"}
             </button>
           </div>
         )}

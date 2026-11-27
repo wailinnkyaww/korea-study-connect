@@ -23,7 +23,6 @@ import StudentSettings from "./pages/Dashboard/StudentSettings";
 
 import AdminLogin from "./pages/Admin/AdminLogin/AdminLogin";
 import Dashboard from "./pages/Admin/Dashboard/Dashboard";
-import AdminRoute from "./components/AdminRoute/AdminRoute";
 
 // Dashboard
 import DashboardLayout from "./components/Dashboard/DashboardLayout";

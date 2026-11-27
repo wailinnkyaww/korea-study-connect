@@ -1,18 +1,20 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useAuth } from "../../context/AuthContext";
+import { uploadProfileImage } from "../../services/cloudinaryService";
+import {
+  getStudentProfile,
+  updateStudentProfile,
+} from "../../services/profileService";
 import type { ChangeEvent, FormEvent } from "react";
 import {
   User,
   Mail,
-  Phone,
-  MapPin,
   GraduationCap,
-  BookOpen,
   Camera,
   Save,
   X,
   Edit3,
   Globe,
-  CalendarDays,
 } from "lucide-react";
 
 import "./StudentProfile.css";
@@ -34,34 +36,85 @@ interface StudentProfileData {
 }
 
 const initialProfile: StudentProfileData = {
-  fullName: "Wai Lin Kyaw",
-  email: "wailin@example.com",
-  phone: "+95 9 123 456 789",
-  dateOfBirth: "2002-05-15",
-  gender: "Male",
-  nationality: "Myanmar",
-  address: "Yangon, Myanmar",
-  currentEducation: "Bachelor's Degree",
-  preferredDegree: "Master's Degree",
-  preferredMajor: "Computer Science / IT",
-  preferredCountry: "South Korea",
-  preferredLanguage: "Korean",
-  bio: "I am interested in pursuing a Master's degree in Computer Science in South Korea. My goal is to improve my technical knowledge and gain international academic experience.",
+  fullName: "",
+  email: "",
+  phone: "",
+  dateOfBirth: "",
+  gender: "",
+  nationality: "",
+  address: "",
+  currentEducation: "",
+  preferredDegree: "",
+  preferredMajor: "",
+  preferredCountry: "",
+  preferredLanguage: "",
+  bio: "",
 };
 
 const StudentProfile = () => {
+  const { currentUser } = useAuth();
   const [profile, setProfile] = useState<StudentProfileData>(initialProfile);
   const [formData, setFormData] = useState<StudentProfileData>(initialProfile);
-
   const [isEditing, setIsEditing] = useState(false);
   const [profileImage, setProfileImage] = useState("");
   const [imagePreview, setImagePreview] = useState("");
   const [saveMessage, setSaveMessage] = useState("");
-
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      if (!currentUser?.uid) return;
+
+      try {
+        setIsLoading(true);
+
+        const data = await getStudentProfile(currentUser.uid);
+
+        if (!data) {
+          throw new Error("Student profile not found.");
+        }
+
+        const loadedProfile: StudentProfileData = {
+          fullName: data.fullName,
+          email: data.email,
+          phone: data.phone,
+          dateOfBirth: data.dateOfBirth,
+          gender: data.gender,
+          nationality: data.nationality,
+          address: data.address,
+          currentEducation: data.currentEducation,
+          preferredDegree: data.preferredDegree,
+          preferredMajor: data.preferredMajor,
+          preferredCountry: data.preferredCountry,
+          preferredLanguage: data.preferredLanguage,
+          bio: data.bio,
+        };
+
+        setProfile(loadedProfile);
+        setFormData(loadedProfile);
+        setProfileImage(data.profileImage || "");
+      } catch (error) {
+        console.error("Failed to load student profile:", error);
+        setSaveMessage(
+          error instanceof Error
+            ? error.message
+            : "Unable to load your profile.",
+        );
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadProfile();
+  }, [currentUser?.uid]);
 
   const handleChange = (
-    event:ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
+    event: ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >,
   ) => {
     const { name, value } = event.target;
 
@@ -76,15 +129,21 @@ const StudentProfile = () => {
 
     if (!file) return;
 
-    if (!file.type.startsWith("image/")) {
-      setSaveMessage("Please select a valid image file.");
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+
+    if (!allowedTypes.includes(file.type)) {
+      setSaveMessage("Only JPG, PNG, and WebP images are allowed.");
+      event.target.value = "";
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
       setSaveMessage("Image size must be less than 5 MB.");
+      event.target.value = "";
       return;
     }
+
+    setSelectedImageFile(file);
 
     const reader = new FileReader();
 
@@ -101,6 +160,7 @@ const StudentProfile = () => {
   const handleEdit = () => {
     setFormData(profile);
     setImagePreview("");
+    setSelectedImageFile(null);
     setIsEditing(true);
     setSaveMessage("");
   };
@@ -108,26 +168,73 @@ const StudentProfile = () => {
   const handleCancel = () => {
     setFormData(profile);
     setImagePreview("");
+    setSelectedImageFile(null);
     setIsEditing(false);
     setSaveMessage("");
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
-  const handleSave = (event: FormEvent<HTMLFormElement>) => {
+  const handleSave = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    setProfile(formData);
-
-    if (imagePreview) {
-      setProfileImage(imagePreview);
+    if (!currentUser?.uid) {
+      setSaveMessage("Please log in again.");
+      return;
     }
 
-    setImagePreview("");
-    setIsEditing(false);
-    setSaveMessage("Your profile has been updated successfully.");
-
-    window.setTimeout(() => {
+    try {
+      setIsSaving(true);
       setSaveMessage("");
-    }, 3000);
+
+      let uploadedImageUrl = profileImage;
+
+      if (selectedImageFile) {
+        uploadedImageUrl = await uploadProfileImage(
+          selectedImageFile,
+          "students",
+        );
+      }
+
+      await updateStudentProfile(currentUser.uid, {
+        fullName: formData.fullName.trim(),
+        phone: formData.phone.trim(),
+        dateOfBirth: formData.dateOfBirth,
+        gender: formData.gender,
+        nationality: formData.nationality.trim(),
+        address: formData.address.trim(),
+        currentEducation: formData.currentEducation,
+        preferredDegree: formData.preferredDegree,
+        preferredMajor: formData.preferredMajor.trim(),
+        preferredCountry: formData.preferredCountry.trim(),
+        preferredLanguage: formData.preferredLanguage,
+        bio: formData.bio.trim(),
+        profileImage: uploadedImageUrl,
+      });
+
+      setProfile(formData);
+      setProfileImage(uploadedImageUrl);
+      setImagePreview("");
+      setSelectedImageFile(null);
+      setIsEditing(false);
+      setSaveMessage("Your profile has been updated successfully.");
+
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    } catch (error) {
+      console.error("Failed to save student profile:", error);
+
+      setSaveMessage(
+        error instanceof Error
+          ? error.message
+          : "Failed to save your profile. Please try again.",
+      );
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const displayedImage = imagePreview || profileImage;
@@ -141,6 +248,10 @@ const StudentProfile = () => {
       .slice(0, 2)
       .toUpperCase();
   };
+
+  if (isLoading) {
+    return <div className="dashboard-loading">Loading student profile...</div>;
+  }
 
   return (
     <div className="student-profile-page">
@@ -448,9 +559,13 @@ const StudentProfile = () => {
               Cancel
             </button>
 
-            <button type="submit" className="profile-save-button">
+            <button
+              type="submit"
+              className="profile-save-button"
+              disabled={isSaving}
+            >
               <Save size={17} />
-              Save Changes
+              {isSaving ? "Saving..." : "Save Changes"}
             </button>
           </div>
         )}

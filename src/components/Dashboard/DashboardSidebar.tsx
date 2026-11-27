@@ -1,7 +1,9 @@
 import type { ElementType } from "react";
-import { NavLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+
+import { NavLink, useNavigate } from "react-router-dom";
+
 import { useAuth } from "../../context/AuthContext";
+import defaultAvatar from "../../assets/default-avatar.png";
 
 import {
   LayoutDashboard,
@@ -15,6 +17,8 @@ import {
   Users,
   ChevronRight,
 } from "lucide-react";
+
+import "./DashboardSidebar.css";
 
 interface MenuItem {
   name: string;
@@ -97,13 +101,19 @@ const DashboardSidebar = ({
   onClose,
 }: DashboardSidebarProps) => {
   const menuItems = role === "student" ? studentMenu : agencyMenu;
-  const { logout } = useAuth();
+
+  const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
+
+  const profileImage = currentUser?.profileImage || defaultAvatar;
 
   const handleLogout = async () => {
     try {
       await logout();
-      navigate("/", { replace: true });
+
+      navigate("/", {
+        replace: true,
+      });
     } catch (error) {
       console.error("Logout failed:", error);
     }
@@ -113,45 +123,62 @@ const DashboardSidebar = ({
     role === "student" ? "Student Portal" : "Agency Portal";
 
   return (
-    <aside className={`dashboard-sidebar ${sidebarOpen ? "sidebar-open" : ""}`}>
-      {/* Brand */}
+    <aside
+      className={`dashboard-sidebar $ {
+        sidebarOpen ? "sidebar-open" : ""
+      }
+
+      `}
+    >
+      {" "}
       <div className="dashboard-brand">
+        {" "}
         <div className="dashboard-brand-icon">
-          <GraduationCap size={26} />
-        </div>
-
+          {" "}
+          <GraduationCap size={26} />{" "}
+        </div>{" "}
         <div>
-          <h2>KoreaStudy</h2>
-          <span>{dashboardTitle}</span>
-        </div>
-
+          {" "}
+          <h2>KoreaStudy</h2> <span> {dashboardTitle}</span>{" "}
+        </div>{" "}
         <button
           className="sidebar-close"
           onClick={onClose}
           aria-label="Close sidebar"
         >
-          <X size={22} />
-        </button>
-      </div>
-
+          {" "}
+          <X size={22} />{" "}
+        </button>{" "}
+      </div>{" "}
       {/* User Information */}
       <div className="dashboard-user">
-        <div className="dashboard-avatar">
-          {userName.charAt(0).toUpperCase()}
-        </div>
+        {" "}
+        <img
+          src={profileImage}
+          alt={`$ {
+        userName
+      }
 
+      profile`}
+          className="dashboard-avatar"
+          onError={(event) => {
+            event.currentTarget.onerror = null;
+            event.currentTarget.src = defaultAvatar;
+          }}
+        />{" "}
         <div className="dashboard-user-info">
-          <h4>{userName}</h4>
+          {" "}
+          <h4> {userName}</h4>{" "}
           <span>
+            {" "}
             {role === "student" ? "Student Account" : "Agency Account"}
-          </span>
-        </div>
-      </div>
-
+          </span>{" "}
+        </div>{" "}
+      </div>{" "}
       {/* Navigation */}
       <nav className="dashboard-navigation">
-        <p className="dashboard-nav-label">MENU</p>
-
+        {" "}
+        <p className="dashboard-nav-label">MENU</p>{" "}
         {menuItems.map((item) => {
           const Icon = item.icon;
 
@@ -161,29 +188,31 @@ const DashboardSidebar = ({
               to={item.path}
               end
               onClick={onClose}
-              className={({ isActive }) =>
-                `dashboard-nav-link ${isActive ? "active" : ""}`
+              className={({ isActive }) => `dashboard-nav-link $ {
+                isActive ? "active" : ""
               }
+
+              `}
             >
-              <Icon size={19} />
-              <span>{item.name}</span>
-              <ChevronRight size={16} className="nav-arrow" />
+              {" "}
+              <Icon size={19} /> <span> {item.name}</span>{" "}
+              <ChevronRight size={16} className="nav-arrow" />{" "}
             </NavLink>
           );
         })}
-      </nav>
-
+      </nav>{" "}
       {/* Sidebar Bottom */}
       <div className="dashboard-sidebar-bottom">
+        {" "}
         <button className="sidebar-logout" onClick={handleLogout}>
-          <LogOut size={18} />
-          <span>Logout</span>
-        </button>
-
+          {" "}
+          <LogOut size={18} /> <span>Logout</span>{" "}
+        </button>{" "}
         <div className="dashboard-sidebar-footer">
-          © 2026 KoreaStudy Connect
-        </div>
-      </div>
+          {" "}
+          © 2026 KoreaStudy Connect{" "}
+        </div>{" "}
+      </div>{" "}
     </aside>
   );
 };

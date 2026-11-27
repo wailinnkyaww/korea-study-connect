@@ -1,15 +1,25 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Menu, X, GraduationCap, User, LogOut } from "lucide-react";
-import { useAuth } from "../../context/AuthContext";
+import { Menu, X, GraduationCap, LogOut } from "lucide-react";
 
+import { useAuth } from "../../context/AuthContext";
+import defaultAvatar from "../../assets/default-avatar.png";
 import "./Navbar.css";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
-  console.log("Current User:", currentUser);
+
+  const dashboardPath =
+    currentUser?.role === "student"
+      ? "/student/dashboard"
+      : currentUser?.role === "agency"
+        ? "/agency/dashboard"
+        : "/admin/dashboard";
+
+  const profileImage = currentUser?.profileImage || defaultAvatar;
 
   const handleLogout = async () => {
     try {
@@ -21,18 +31,13 @@ function Navbar() {
     }
   };
 
-  const dashboardPath =
-    currentUser?.role === "student"
-      ? "/student/dashboard"
-      : currentUser?.role === "agency"
-        ? "/agency/dashboard"
-        : "/admin/dashboard";
+  const closeMenu = () => setMenuOpen(false);
 
   return (
     <nav className="navbar">
       <div className="nav-container container">
         {/* Logo */}
-        <Link to="/" className="nav-logo" onClick={() => setMenuOpen(false)}>
+        <Link to="/" className="nav-logo" onClick={closeMenu}>
           <span className="logo-icon">
             <GraduationCap size={25} />
           </span>
@@ -45,45 +50,66 @@ function Navbar() {
 
         {/* Navigation Links */}
         <div className={`nav-links ${menuOpen ? "active" : ""}`}>
-          <Link to="/" onClick={() => setMenuOpen(false)}>
+          <Link to="/" onClick={closeMenu}>
             Home
           </Link>
 
-          <Link to="/agencies" onClick={() => setMenuOpen(false)}>
+          <Link to="/agencies" onClick={closeMenu}>
             Agencies
           </Link>
 
-          <Link to="/universities" onClick={() => setMenuOpen(false)}>
+          <Link to="/universities" onClick={closeMenu}>
             Universities
           </Link>
 
-          <a href="#programs" onClick={() => setMenuOpen(false)}>
+          <a href="#programs" onClick={closeMenu}>
             Programs
           </a>
 
-          <a href="#about" onClick={() => setMenuOpen(false)}>
+          <a href="#about" onClick={closeMenu}>
             About
           </a>
 
-          {/* Mobile Authentication Links */}
+          {/* Mobile Authentication */}
           <div className="mobile-auth-links">
             {!currentUser ? (
               <>
-                <Link to="/login" onClick={() => setMenuOpen(false)}>
+                <Link to="/login" onClick={closeMenu}>
                   Login
                 </Link>
 
                 <Link
                   to="/register"
                   className="mobile-register"
-                  onClick={() => setMenuOpen(false)}
+                  onClick={closeMenu}
                 >
                   Register
                 </Link>
               </>
             ) : (
               <>
-                <Link to={dashboardPath} onClick={() => setMenuOpen(false)}>
+                <div className="mobile-user-info">
+                  <img
+                    src={profileImage}
+                    alt="Profile"
+                    className="nav-avatar"
+                    onError={(event) => {
+                      event.currentTarget.onerror = null;
+                      event.currentTarget.src = defaultAvatar;
+                    }}
+                  />
+
+                  <div>
+                    <strong>{currentUser.fullName}</strong>
+                    <span>
+                      {currentUser.role.charAt(0).toUpperCase() +
+                        currentUser.role.slice(1)}{" "}
+                      Account
+                    </span>
+                  </div>
+                </div>
+
+                <Link to={dashboardPath} onClick={closeMenu}>
                   My Dashboard
                 </Link>
 
@@ -110,10 +136,19 @@ function Navbar() {
             </>
           ) : (
             <>
-              <span className="nav-user">
-                <User size={17} />
-                {currentUser.fullName}
-              </span>
+              <div className="nav-user">
+                <img
+                  src={profileImage}
+                  alt={`${currentUser.fullName} profile`}
+                  className="nav-avatar"
+                  onError={(event) => {
+                    event.currentTarget.onerror = null;
+                    event.currentTarget.src = defaultAvatar;
+                  }}
+                />
+
+                <span>{currentUser.fullName}</span>
+              </div>
 
               <Link to={dashboardPath} className="nav-register">
                 Dashboard
@@ -132,8 +167,9 @@ function Navbar() {
           className="menu-toggle"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle navigation"
+          aria-expanded={menuOpen}
         >
-          {menuOpen ? <X /> : <Menu />}
+          {menuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
     </nav>
